@@ -38,7 +38,9 @@ app.post('/webhook/', function (req, res) {
             text = event.message.text
             if (text === 'remindme') {
                 sendConfirmationMessage(sender)
-                startCountdown(sender)
+                setTimeout(function () {
+                  sendTextMessage(sender, "I have detected that you are not at the gym.")
+                }, 5000);
                 continue
             }
             sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
@@ -56,10 +58,6 @@ var token = "EAACf3gk27BABAF5HaqD36bv3wfh6pxHTFAJFfxKE00L4PpcuAy4BohC47WolMnk2Il
 
 function sendConfirmationMessage(sender) {
   sendTextMessage(sender, "Countdown started!")
-}
-
-function startCountdown(sender) {
-  setTimeout (function sendTextMessage(sender, "I have detected that you are still not at the gym"), 5000)
 }
 
 function sendTextMessage(sender, text) {
