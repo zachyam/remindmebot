@@ -36,13 +36,6 @@ app.post('/webhook/', function (req, res) {
         sender = event.sender.id
         if (event.message && event.message.text) {
             text = event.message.text
-            if (text === 'remindme') {
-                sendConfirmationMessage(sender)
-                setTimeout(function () {
-                  sendTextMessage(sender, "I have detected that you are not at the gym.")
-                }, 5000);
-                continue
-            }
 
             if (text === 'add workout') {
               sendWorkoutMessage(workout)
