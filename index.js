@@ -37,8 +37,9 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             text = event.message.text
 
-            if (text === 'add workout') {
-              sendWorkoutMessage(workout)
+            if (text === 'generic') {
+              sendGenericMessage(sender)
+              continue;
             }
             sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
@@ -52,14 +53,6 @@ app.post('/webhook/', function (req, res) {
 })
 
 var token = "EAACf3gk27BABAF5HaqD36bv3wfh6pxHTFAJFfxKE00L4PpcuAy4BohC47WolMnk2IlUDyb1HnmBzmXzO965BBeg2rD1ZB570o2HcnWIxZBXxzkIJzwdmFZB3axLDSVBZCQRbZBzX9xMvi5TrzHkdSashtPlHZBKJ9kOHPw0SBx7wZDZD"
-
-function sendWorkoutMessage(sender) {
-  sendTextMessage(sender, "Please input workout, number of sets, and muscle group")
-}
-
-function sendConfirmationMessage(sender) {
-  sendTextMessage(sender, "Countdown started!")
-}
 
 function sendTextMessage(sender, text) {
     messageData = {
