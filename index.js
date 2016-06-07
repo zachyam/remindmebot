@@ -43,7 +43,6 @@ app.post('/webhook/', function (req, res) {
             }
 
             else if (text === 'remindme') {
-              sendTextMessage(sender, "Input time and subject");  
               sendTextMessage(sender, "Countdown started!");
               startCountdown(sender);
               continue;
