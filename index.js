@@ -44,8 +44,8 @@ app.post('/webhook/', function (req, res) {
             }
 
             if (text === 'remindme') {
-              sendTextMessage(sender, "In how many seconds do you want to be reminded?");
               ++lastText;
+              sendTextMessage(sender, "In how many seconds do you want to be reminded?");
               continue;
             } 
 
