@@ -38,6 +38,11 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             text = event.message.text
 
+            if (text === 'generic') {
+              sendGenericMessage(sender)
+              continue;
+            }
+
             if (text === 'remindme') {
               sendTextMessage(sender, "In how many seconds do you want to be reminded?");
               lastText = 'countdown';
@@ -47,11 +52,6 @@ app.post('/webhook/', function (req, res) {
             if (lastText === 'countdown') {
               sendTextMessage(sender, "Sure! We will remind you in " + text + " seconds");
               startCountdown(sender, text);
-              continue;
-            }
-
-            if (text === 'generic') {
-              sendGenericMessage(sender)
               continue;
             }
 
