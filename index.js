@@ -56,6 +56,7 @@ app.post('/webhook/', function (req, res) {
               lastText = 'countdown';
               sendTextMessage(sender, lastText);
             } else if (isNaN(text)) {
+                sendTextMessage(sender, lastText);
                 sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
             } else {
               sendTextMessage(sender, "Sure! We will remind you in " + text + " seconds");
