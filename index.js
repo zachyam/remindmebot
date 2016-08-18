@@ -44,28 +44,14 @@ app.post('/webhook/', function (req, res) {
               continue;
             }
 
-            if (lastText == 'countdown') {
-              //sendTextMessage(sender, text);
-              startCountdown(sender);
-              continue;
-            }
-
-            if (lastText == 'remindme') {
-             sendTextMessage(sender, "In how many hours do you want to be reminded?");
-             lastText = 'countdown';
-             continue;    
-
-            }
-
             if (text === 'remindme') {
-              lastText = 'remindme';  
-              //sendTextMessage(sender, "Please enter reminder"); 
-              //startCountdown(sender);
+              sendTextMessage(sender, "Countdown started");
+              startCountdown(sender); 
               continue;
 
             }
 
-            //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
         if (event.postback) {
             text = JSON.stringify(event.postback)
