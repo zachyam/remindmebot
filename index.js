@@ -40,7 +40,7 @@ app.post('/webhook/', function (req, res) {
             text = event.message.text
 
             if (lastText === 'countdown') {
-              sendTextMessage(sender, "Hi");  
+              sendTextMessage(sender, "Sure! We will remind you in " + text + "minutes");  
               continue;
             }
 
