@@ -46,7 +46,7 @@ app.post('/webhook/', function (req, res) {
 
             if (lastText == 'countdown') {
               sendTextMessage(sender, text);
-              startCountdown(text);
+              startCountdown(sender);
               continue;
             }
 
@@ -78,8 +78,8 @@ app.post('/webhook/', function (req, res) {
 
 var token = "EAACf3gk27BABACO9Km4mlWwP7zb5afuU1oNyt5d5czND4XCeoFZAMEeJkgixr0W830vxHLzgXRPJeqVsGQZAHujF9aVNGw4PYfEypkrTb1IsVG4IBf0sGi5rtt1elm1hJl90WfkQh7zjgAwwtxD08ilgDPYZAS6OY16cqzqHgZDZD"
 
-function startCountdown(time) {
-  setTimeout(function() {sendTextMessage(sender, "Time's up!")}, time);
+function startCountdown(sender) {
+  setTimeout(function() {sendTextMessage(sender, "Time's up!")}, 10000);
 }
 
 function sendTextMessage(sender, text) {
