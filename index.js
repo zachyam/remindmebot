@@ -77,7 +77,7 @@ app.post('/webhook/', function (req, res) {
     res.sendStatus(200)
 })
 
-var token = "EAACf3gk27BABAF5HaqD36bv3wfh6pxHTFAJFfxKE00L4PpcuAy4BohC47WolMnk2IlUDyb1HnmBzmXzO965BBeg2rD1ZB570o2HcnWIxZBXxzkIJzwdmFZB3axLDSVBZCQRbZBzX9xMvi5TrzHkdSashtPlHZBKJ9kOHPw0SBx7wZDZD"
+var token = "EAACf3gk27BABACO9Km4mlWwP7zb5afuU1oNyt5d5czND4XCeoFZAMEeJkgixr0W830vxHLzgXRPJeqVsGQZAHujF9aVNGw4PYfEypkrTb1IsVG4IBf0sGi5rtt1elm1hJl90WfkQh7zjgAwwtxD08ilgDPYZAS6OY16cqzqHgZDZD"
 
 function startCountdown(time) {
   setTimeout(function() {sendTextMessage(sender, "Time's up!")}, time);
