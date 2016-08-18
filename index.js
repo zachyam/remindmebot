@@ -30,7 +30,7 @@ app.listen(app.get('port'), function() {
 })
 
 var lastText;
-bool val = true;
+var val = true;
 
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
