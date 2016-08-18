@@ -40,7 +40,8 @@ app.post('/webhook/', function (req, res) {
             text = event.message.text
 
             if (lastText === 'countdown') {
-              sendTextMessage(sender, "Sure! We will remind you in " + text + " minutes");  
+              sendTextMessage(sender, "Sure! We will remind you in " + text + " seconds"); 
+              startCountdown(sender, text); 
               continue;
             }
 
@@ -50,7 +51,7 @@ app.post('/webhook/', function (req, res) {
             }
 
             if (text === 'remindme') {
-              sendTextMessage(sender, "In how many minutes do you want to be reminded?");
+              sendTextMessage(sender, "In how many seconds do you want to be reminded?");
               lastText = 'countdown';
               continue;
 
@@ -69,8 +70,9 @@ app.post('/webhook/', function (req, res) {
 
 var token = "EAACf3gk27BABACO9Km4mlWwP7zb5afuU1oNyt5d5czND4XCeoFZAMEeJkgixr0W830vxHLzgXRPJeqVsGQZAHujF9aVNGw4PYfEypkrTb1IsVG4IBf0sGi5rtt1elm1hJl90WfkQh7zjgAwwtxD08ilgDPYZAS6OY16cqzqHgZDZD"
 
-function startCountdown(sender) {
-  setTimeout(function() {sendTextMessage(sender, "Time's up!")}, 10000);
+function startCountdown(sender, time) {
+  setTimeout(function() 
+    {sendTextMessage(sender, "Time's up!")}, time * 1000);
 }
 
 function sendTextMessage(sender, text) {
