@@ -43,6 +43,12 @@ app.post('/webhook/', function (req, res) {
               continue;
             }
 
+            if (lastText === '1') {
+                sendTextMessage(sender, "In how many seconds do you want to be reminded about " + text + " ?");
+                lastText = '0';
+                continue;
+            }
+
             if (text === 'remindme') {
               sendTextMessage(sender, "What do you want to reminded about?");
               lastText = '1';
@@ -54,11 +60,6 @@ app.post('/webhook/', function (req, res) {
               startCountdown(sender, text);
             }
 
-            if (lastText === '1') {
-                sendTextMessage(sender, "In how many seconds do you want to be reminded about " + text + " ?");
-                lastText = '0';
-                continue;
-            }
 
             //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
