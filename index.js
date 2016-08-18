@@ -29,8 +29,7 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 
-var lastText = 'none';
-
+var lastText;
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
@@ -39,9 +38,14 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             text = event.message.text
 
+            if (text === 'remindme') {
+              sendTextMessage(sender, "In how many seconds do you want to be reminded?");
+              lastText = 'countdown';
+              continue;
+            }
+
             if (lastText === 'countdown') {
               sendTextMessage(sender, "Sure! We will remind you in " + text + " seconds");
-
               startCountdown(sender, text);
               continue;
             }
@@ -49,13 +53,6 @@ app.post('/webhook/', function (req, res) {
             if (text === 'generic') {
               sendGenericMessage(sender)
               continue;
-            }
-
-            if (text === 'remindme' && lastText === 'none') {
-              sendTextMessage(sender, "In how many seconds do you want to be reminded?");
-              lastText = 'countdown';
-              continue;
-
             }
 
             //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
@@ -74,7 +71,7 @@ var token = "EAACf3gk27BABACO9Km4mlWwP7zb5afuU1oNyt5d5czND4XCeoFZAMEeJkgixr0W830
 function startCountdown(sender, time) {
   setTimeout(function() 
     {sendTextMessage(sender, "Time's up!")}, time * 1000);
-   
+
 }
 
 function sendTextMessage(sender, text) {
