@@ -41,7 +41,7 @@ app.post('/webhook/', function (req, res) {
 
             if (lastText === 'countdown') {
               sendTextMessage(sender, "Sure! We will remind you in " + text + " seconds");
-              lastText = 'none'; 
+
               startCountdown(sender, text);
               continue;
             }
@@ -74,6 +74,7 @@ var token = "EAACf3gk27BABACO9Km4mlWwP7zb5afuU1oNyt5d5czND4XCeoFZAMEeJkgixr0W830
 function startCountdown(sender, time) {
   setTimeout(function() 
     {sendTextMessage(sender, "Time's up!")}, time * 1000);
+  lastText = 'none'; 
 }
 
 function sendTextMessage(sender, text) {
