@@ -30,14 +30,13 @@ app.listen(app.get('port'), function() {
 })
 
 var lastText;
-var val = true;
 
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
-        if (event.message && event.message.text && val == true) {
+        if (event.message && event.message.text) {
             text = event.message.text
 
             if (text === 'generic') {
@@ -47,7 +46,6 @@ app.post('/webhook/', function (req, res) {
 
             if (lastText == 'countdown') {
               startCountdown(text);
-              val = false;
               continue;
             }
 
