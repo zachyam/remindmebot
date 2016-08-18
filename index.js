@@ -42,7 +42,7 @@ app.post('/webhook/', function (req, res) {
             if (lastText === 'countdown') {
               sendTextMessage(sender, "Sure! We will remind you in " + text + " seconds"); 
               startCountdown(sender, text);
-              lastText = 'false'; 
+              //lastText = 'false'; 
               continue;
             }
 
