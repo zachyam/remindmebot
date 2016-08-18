@@ -30,6 +30,7 @@ app.listen(app.get('port'), function() {
 })
 
 var lastText;
+var tasks = [];
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
@@ -43,16 +44,16 @@ app.post('/webhook/', function (req, res) {
               continue;
             }
 
-            if (lastText === '1') {
+            if (lastText === 'countdown') {
+                updateTasks(text);
                 sendTextMessage(sender, "In how many seconds do you want to be reminded about " + text + " ?");
-                lastText = '0';
+                lastText = 'falseCountdown';
                 continue;
             }
 
             if (text === 'remindme') {
               sendTextMessage(sender, "What do you want to reminded about?");
-              lastText = '1';
-              continue;
+              lastText = 'countdown';
             } else if (isNaN(text)) {
                 sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
             } else {
@@ -78,6 +79,10 @@ function startCountdown(sender, time) {
   setTimeout(function() 
     {sendTextMessage(sender, "Time's up!")}, time * 1000);
 
+}
+
+function updateTasks(task) {
+  tasks.push(task);
 }
 
 function sendTextMessage(sender, text) {
