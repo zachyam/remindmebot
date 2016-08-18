@@ -29,7 +29,7 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 
-var lastText = 'hi';
+var lastText;
 bool val = true;
 
 app.post('/webhook/', function (req, res) {
@@ -37,7 +37,7 @@ app.post('/webhook/', function (req, res) {
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
-        while (event.message && event.message.text && (val)) {
+        if (event.message && event.message.text && val == true) {
             text = event.message.text
 
             if (text === 'generic') {
@@ -58,7 +58,7 @@ app.post('/webhook/', function (req, res) {
 
             }
 
-            if (text === 'remindme' && lastText == 'hi') {
+            if (text === 'remindme') {
               lastText = 'remindme';  
               //sendTextMessage(sender, "Please enter reminder"); 
               //startCountdown(sender);
