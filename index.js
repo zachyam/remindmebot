@@ -29,7 +29,7 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 
-var lastText;
+var lastText = 'none';
 
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
@@ -42,8 +42,8 @@ app.post('/webhook/', function (req, res) {
             if (lastText === 'countdown') {
               sendTextMessage(sender, "Sure! We will remind you in " + text + " seconds"); 
               startCountdown(sender, text);
-              //lastText = 'false'; 
-              break;
+              lastText = 'none';
+              continue;
             }
 
             if (text === 'generic') {
@@ -51,7 +51,7 @@ app.post('/webhook/', function (req, res) {
               continue;
             }
 
-            if (text === 'remindme') {
+            if (text === 'remindme' && lastText === 'none') {
               sendTextMessage(sender, "In how many seconds do you want to be reminded?");
               lastText = 'countdown';
               continue;
