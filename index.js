@@ -29,8 +29,8 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 
-var lastText = 0;
 app.post('/webhook/', function (req, res) {
+    lastText = 0;
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
@@ -45,7 +45,7 @@ app.post('/webhook/', function (req, res) {
 
             if (lastText == 1) {
                 sendTextMessage(sender, "In how many seconds do you want to be reminded about " + text + " ?");
-                lastText = 0;
+                --lastText;
                 continue;
             }
 
@@ -54,11 +54,9 @@ app.post('/webhook/', function (req, res) {
               ++lastText;
             } else if (isNaN(text)) {
                 sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
-                lastText = 0;
             } else {
               sendTextMessage(sender, "Sure! We will remind you in " + text + " seconds");
               startCountdown(sender, text);
-              lastText = 0;
             }
 
             //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
