@@ -29,7 +29,7 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 
-var lastText;
+var lastText = 0;
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
@@ -45,15 +45,17 @@ app.post('/webhook/', function (req, res) {
 
             if (text === 'remindme') {
               sendTextMessage(sender, "In how many seconds do you want to be reminded?");
-              lastText = 'countdown';
+              ++lastText;
               continue;
             } 
 
-            if ( Number.isNaN(text)) {
+            if ( isNaN(text)) {
                 sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
+                continue;
             }
 
-            if (lastText === 'countdown') {
+            if (lastText == 1) {
+              --lastText;
               sendTextMessage(sender, "Sure! We will remind you in " + text + " seconds");
               startCountdown(sender, text);
               continue;
