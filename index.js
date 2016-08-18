@@ -29,14 +29,15 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 
-var lastText;
+var lastText = 'hi';
+bool val = true;
 
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
-        if (event.message && event.message.text) {
+        while (event.message && event.message.text && (val)) {
             text = event.message.text
 
             if (text === 'generic') {
@@ -46,6 +47,8 @@ app.post('/webhook/', function (req, res) {
 
             if (lastText == 'countdown') {
               startCountdown(text);
+              val = false;
+              continue;
             }
 
             if (lastText == 'remindme') {
@@ -55,15 +58,15 @@ app.post('/webhook/', function (req, res) {
 
             }
 
-            if (text === 'remindme') {
+            if (text === 'remindme' && lastText == 'hi') {
               lastText = 'remindme';  
-              sendTextMessage(sender, "Please enter reminder"); 
+              //sendTextMessage(sender, "Please enter reminder"); 
               //startCountdown(sender);
               continue;
 
             }
 
-            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
         if (event.postback) {
             text = JSON.stringify(event.postback)
