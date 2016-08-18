@@ -29,7 +29,6 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 
-var lastText = 0;
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
@@ -48,7 +47,7 @@ app.post('/webhook/', function (req, res) {
               continue;
             } 
 
-            if ( isNaN(text)) {
+            if (isNaN(text)) {
                 sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
                 continue;
             } else {
