@@ -45,6 +45,7 @@ app.post('/webhook/', function (req, res) {
             }
 
             if (lastText == 'countdown') {
+              sendTextMessage(sender, text);
               startCountdown(text);
               continue;
             }
