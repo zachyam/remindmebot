@@ -44,11 +44,11 @@ app.post('/webhook/', function (req, res) {
               continue;
             }
 
-            if ((text) && lastText == 'countdown') {
+            if (lastText == 'countdown') {
                 updateTasks(text);
                 sendTextMessage(sender, "In how many seconds do you want to be reminded about " + text + " ?");
-                lastText = 'falseCountdown';
-                continue;
+                //lastText = 'falseCountdown';
+                //continue;
             }
 
             if (text === 'remindme') {
