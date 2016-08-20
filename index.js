@@ -44,8 +44,7 @@ app.post('/webhook/', function (req, res) {
             }
 
             if (text != 'remindme' && lastText == 'remindme') {
-              sendTextMessage(sender, "When do you want to be reminded about " + text + " ?");
-              //lastText = 'off';
+              sendReminderMessage(sender, "When do you want to be reminded about " + text + " ?");
               continue;
             }
 
@@ -84,6 +83,28 @@ function startCountdown(sender, time) {
 }
 
 function sendTextMessage(sender, text) {
+    messageData = {
+        text:text
+    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
+
+function sendReminderMessage(sender, text) {
+    lastText = 'off';
     messageData = {
         text:text
     }
