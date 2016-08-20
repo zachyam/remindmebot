@@ -29,7 +29,7 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 
-var lastText;
+var lastText = 'hi';
 
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
