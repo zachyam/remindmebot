@@ -101,10 +101,11 @@ function sendTextMessage(sender, text) {
 }
 
 function sendReminderMessage(sender, lastText, text) {
+    lastText = 'off';
     messageData = {
         text:text
     }
-    lastText = 'off';
+
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
