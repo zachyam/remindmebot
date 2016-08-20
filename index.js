@@ -44,7 +44,7 @@ app.post('/webhook/', function (req, res) {
             }
 
             if (text != 'remindme' && lastText == 'remindme') {
-              sendReminderMessage(sender, "When do you want to be reminded about " + text + " ?");
+              sendReminderMessage(sender, lastText, "When do you want to be reminded about " + text + " ?");
               continue;
             }
 
@@ -103,8 +103,8 @@ function sendTextMessage(sender, text) {
     })
 }
 
-function sendReminderMessage(sender, text) {
-    lastText = 'off';
+function sendReminderMessage(sender, status text) {
+    status = 'off';
     messageData = {
         text:text
     }
