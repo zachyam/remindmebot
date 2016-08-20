@@ -29,6 +29,8 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 
+var remindActivated = false;
+var countdown = false;
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
@@ -44,21 +46,20 @@ app.post('/webhook/', function (req, res) {
 
             if (text === 'remindme') {
               sendTextMessage(sender, "What do you want to be reminded about?");
-              remindActivated = 'on';
+              remindActivated = true;
               continue;
             } 
 
-            if (remindActivated === 'on') {
-              sendTextMessage(sender, "In how many seconds do you want to be reminded about " +text+ " ?");
-              countdown = 'on';
-              remindActivated = 'off';
+            if (countdown) {
+              sendTextMessage(sender, "Sure! We will remind you in " +text+ " seconds");
+              startCountdown(sender, text);
+              countdown = false;
               continue;
             }
 
-            if (countdown === 'on') {
-              sendTextMessage(sender, "Sure! We will remind you in " +text+ " seconds");
-              startCountdown(sender, text);
-              countdown = 'off';
+            if (remindActivated) {
+              sendTextMessage(sender, "In how many seconds do you want to be reminded about " +text+ " ?");
+              countdown = true;
               continue;
             }
 
