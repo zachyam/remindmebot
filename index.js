@@ -41,7 +41,7 @@ app.post('/webhook/', function (req, res) {
 
             if (lastText == 'on') {
               sendTextMessage(sender, "When do you want to be reminded?");
-              lastText = 'off';
+              //lastText = 'off';
               continue;
             }
 
@@ -51,7 +51,7 @@ app.post('/webhook/', function (req, res) {
               continue;
             } 
 
-            else if (isNaN(text) && lastText === 'off') {
+            else if (isNaN(text)) {
                 sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
                 continue;
             } else {
