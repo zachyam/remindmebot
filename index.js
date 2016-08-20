@@ -43,12 +43,15 @@ app.post('/webhook/', function (req, res) {
               sendReminderMessage(function(result) {
                 changeStatus(result);
               });
+              sendTextMessage(sender, lastText);
               continue;
             }
 
             if (text === 'remindme') {
-              lastText = 'on';
-              sendTextMessage(sender, "What do you want to be reminded about?");
+              sendReminderMessage1(function(result) {
+                changeStatus(result);
+              });
+              sendTextMessage(sender, lastText);
               continue;
             } 
 
@@ -108,6 +111,11 @@ function sendTextMessage(sender, text) {
 function sendReminderMessage(callback) {
     sendTextMessage(sender, "When?");
     callback('off');
+}
+
+function sendReminderMessage1(callback) {
+    sendTextMessage(sender, "What?");
+    callback('on');
 }
 
 
