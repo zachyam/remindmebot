@@ -31,6 +31,27 @@ app.listen(app.get('port'), function() {
 
 var lastText;
 
+function sendTextMessage(sender, text) {
+    messageData = {
+        text:text
+    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
+
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
@@ -41,10 +62,9 @@ app.post('/webhook/', function (req, res) {
 
             if (lastText == 'on') {
               sendTextMessage(sender, "When do you want to be reminded?");
-              
+              lastText = 'off';   
             }
-            lastText = 'off';
-            continue;
+
 
             if (text === 'remindme') {
               lastText = 'on';
@@ -78,27 +98,6 @@ function startCountdown(sender, time) {
   setTimeout(function() 
     {sendTextMessage(sender, "Time's up!")}, time * 1000);
 
-}
-
-function sendTextMessage(sender, text) {
-    messageData = {
-        text:text
-    }
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token:token},
-        method: 'POST',
-        json: {
-            recipient: {id:sender},
-            message: messageData,
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
 }
 
 
