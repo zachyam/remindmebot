@@ -31,7 +31,6 @@ app.listen(app.get('port'), function() {
 
 var lastText;
 
-
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
@@ -41,7 +40,8 @@ app.post('/webhook/', function (req, res) {
             text = event.message.text
 
             if (lastText == 'on') {
-              sendReminderMessage(sender, lastText, "When do you want to be reminded?");
+              sendTextMessage(sender, "When do you want to be reminded?");
+              lastText = 'off';
               continue;   
             }
 
@@ -100,29 +100,6 @@ function sendTextMessage(sender, text) {
     })
 }
 
-function sendReminderMessage(sender, lastText, text) {
-    lastText = 'off';
-    messageData = {
-        text:text
-    }
-
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token:token},
-        method: 'POST',
-        json: {
-            recipient: {id:sender},
-            message: messageData,
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
-    
-}
 
 function sendGenericMessage(sender) {
     messageData = {
