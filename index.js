@@ -37,8 +37,8 @@ function startCountdown(sender, time) {
 
 }
 
-function changeStatus() {
-    lastText = 'off';
+function changeStatus(myVar) {
+    lastText = myVar;
 }
 
 function sendTextMessage(sender, text) {
@@ -81,7 +81,7 @@ function sendReminderMessage(sender, text, callback) {
             console.log('Error: ', response.body.error)
         }
     })
-    callback();
+    callback('off');
 }
 
 
@@ -100,8 +100,9 @@ app.post('/webhook/', function (req, res) {
             } 
 
             if (lastText === 'on') {
-              sendReminderMessage(sender, "When?", changeStatus);
-              continue;
+              sendReminderMessage(sender, "When?", function(myVar) {
+                changeStatus(myVar);
+              });
             }
 
             if (isNaN(text)) {
