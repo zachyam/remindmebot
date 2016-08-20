@@ -52,7 +52,7 @@ app.post('/webhook/', function (req, res) {
 
             if (text === 'remindme') {
               lastText = 'on';
-              console.log("What do you want to be reminded about?");
+              sendTextMessage(sender, "What do you want to be reminded about?");
               continue;
             } 
 
