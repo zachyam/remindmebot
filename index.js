@@ -29,8 +29,6 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 
-var remindActivated;
-var countdown;
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
@@ -54,7 +52,6 @@ app.post('/webhook/', function (req, res) {
               sendTextMessage(sender, "In how many seconds do you want to be reminded about " +text+ " ?");
               countdown = 'on';
               remindActivated = 'off';
-              sendTextMessage(sender, countdown);
               continue;
             }
 
