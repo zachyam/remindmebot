@@ -29,9 +29,10 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 
+var lastText;
+
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
-    var lastText;
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
