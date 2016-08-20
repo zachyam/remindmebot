@@ -46,10 +46,10 @@ app.post('/webhook/', function (req, res) {
               sendTextMessage(sender, "What do you want to be reminded about?");
               //text = event.message.text
               sendTextMessage(sender, "In how many seconds do you want to be reminded about ");
-              while (isNaN(text)) {
+              /*while (isNaN(text)) {
                 sendTextMessage(sender, "Sorry! Invalid input. Please input a number.");
                 text = event.message.text
-              } 
+              } */
               sendTextMessage(sender, "Sure! We will remind you in " + text + " seconds");
               startCountdown(sender, text);
               continue;
