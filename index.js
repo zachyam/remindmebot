@@ -103,8 +103,8 @@ function sendTextMessage(sender, text) {
     })
 }
 
-function sendReminderMessage(sender, status, text) {
-    status = 'off';
+function sendReminderMessage(sender, lastText, text) {
+    lastText = 'off';
     messageData = {
         text:text
     }
