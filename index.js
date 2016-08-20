@@ -29,6 +29,7 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 
+var lastText;
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
@@ -42,8 +43,15 @@ app.post('/webhook/', function (req, res) {
               continue;
             }
 
+            if (lastText === 'remindme') {
+              sendTextMessage(sender, "When do you want to be reminded about " + text + " ?");
+              lastText = 'off';
+              continue;
+            }
+
             if (text === 'remindme') {
-              myFunction(req, res, i);
+              lastText = 'remindme';
+              sendTextMessage(sender, "What do you want to be reminded about?");
               continue;
             } 
 
@@ -68,27 +76,6 @@ app.post('/webhook/', function (req, res) {
 })
 
 var token = "EAACf3gk27BABACO9Km4mlWwP7zb5afuU1oNyt5d5czND4XCeoFZAMEeJkgixr0W830vxHLzgXRPJeqVsGQZAHujF9aVNGw4PYfEypkrTb1IsVG4IBf0sGi5rtt1elm1hJl90WfkQh7zjgAwwtxD08ilgDPYZAS6OY16cqzqHgZDZD"
-
-function myFunction(req, res, i) {
-  i += 1;  
-  sendTextMessage(sender, "What do you want to be reminded about?");
-  messaging_events = req.body.entry[0].messaging
-  for (; i < messaging_events.length; i++) {
-        event = req.body.entry[0].messaging[i]
-        sender = event.sender.id
-        if (event.message && event.message.text) {
-            text = event.message.text
-
-            if(isNaN(text)) {
-              sendTextMessage(sender, "When do you want to be reminded about " + text + " ?");
-              continue;
-            }
-            sendTextMessage(sender, "Sure! We will remind you in " + text + " seconds");
-            startCountdown(sender, text);
-
-        }
-    }
-}
 
 function startCountdown(sender, time) {
   setTimeout(function() 
