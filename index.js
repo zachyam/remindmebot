@@ -29,49 +29,7 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 
-var lastText = 'hi';
-
-app.post('/webhook/', function (req, res) {
-    messaging_events = req.body.entry[0].messaging
-    for (i = 0; i < messaging_events.length; i++) {
-        event = req.body.entry[0].messaging[i]
-        sender = event.sender.id
-        if (event.message && event.message.text) {
-            sendTextMessage(sender, lastText);
-            text = event.message.text
-
-            if (lastText === 'on') {
-              sendReminderMessage(sender, "When?", changeStatus);
-              continue;
-            }
-
-            if (text === 'remindme') {
-              sendTextMessage(sender, "What?");
-              lastText = 'on';
-              continue;
-            } 
-
-            else if (isNaN(text)) {
-                sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
-                continue;
-            } else {
-              sendTextMessage(sender, "Sure! We will remind you in " + text + " seconds");
-              startCountdown(sender, text);
-              continue;
-            }
-
-            //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
-        }
-        if (event.postback) {
-            text = JSON.stringify(event.postback)
-            sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
-            continue
-        }
-    }
-    res.sendStatus(200)
-})
-
-var token = "EAACf3gk27BABACO9Km4mlWwP7zb5afuU1oNyt5d5czND4XCeoFZAMEeJkgixr0W830vxHLzgXRPJeqVsGQZAHujF9aVNGw4PYfEypkrTb1IsVG4IBf0sGi5rtt1elm1hJl90WfkQh7zjgAwwtxD08ilgDPYZAS6OY16cqzqHgZDZD"
+var lastText;
 
 function startCountdown(sender, time) {
   setTimeout(function() 
@@ -127,10 +85,47 @@ function sendReminderMessage(sender, text, callback) {
 }
 
 
-function sendReminderMessage1(callback) {
-    sendTextMessage(sender, "What?");
-    callback('on');
-}
+app.post('/webhook/', function (req, res) {
+    messaging_events = req.body.entry[0].messaging
+    for (i = 0; i < messaging_events.length; i++) {
+        event = req.body.entry[0].messaging[i]
+        sender = event.sender.id
+        if (event.message && event.message.text) {
+            text = event.message.text
+
+            if (text === 'remindme') {
+              sendTextMessage(sender, "What?");
+              lastText = 'on';
+              continue;
+            } 
+
+            if (lastText === 'on') {
+              sendReminderMessage(sender, "When?", changeStatus);
+              continue;
+            }
+
+            else if (isNaN(text)) {
+                sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
+                continue;
+            } else {
+              sendTextMessage(sender, "Sure! We will remind you in " + text + " seconds");
+              startCountdown(sender, text);
+              continue;
+            }
+
+            //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+        }
+        if (event.postback) {
+            text = JSON.stringify(event.postback)
+            sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
+            continue
+        }
+    }
+    res.sendStatus(200)
+})
+
+var token = "EAACf3gk27BABACO9Km4mlWwP7zb5afuU1oNyt5d5czND4XCeoFZAMEeJkgixr0W830vxHLzgXRPJeqVsGQZAHujF9aVNGw4PYfEypkrTb1IsVG4IBf0sGi5rtt1elm1hJl90WfkQh7zjgAwwtxD08ilgDPYZAS6OY16cqzqHgZDZD"
+
 
 
 function sendGenericMessage(sender) {
