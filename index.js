@@ -34,12 +34,13 @@ var lastText;
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
+        sendTextMessage(sender, lastText);
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
         if (event.message && event.message.text) {
             text = event.message.text
 
-            if (lastText == 'on') {
+            if (lastText === 'on') {
               sendReminderMessage(sender, "When?", changeStatus);
               continue;
             }
