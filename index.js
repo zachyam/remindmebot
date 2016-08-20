@@ -43,7 +43,6 @@ app.post('/webhook/', function (req, res) {
             }
 
             if (text === 'remindme') {
-              sendTextMessage(sender, "What do you want to be reminded about?");
               myFunction(req, res);
               continue;
             } 
@@ -71,6 +70,7 @@ app.post('/webhook/', function (req, res) {
 var token = "EAACf3gk27BABACO9Km4mlWwP7zb5afuU1oNyt5d5czND4XCeoFZAMEeJkgixr0W830vxHLzgXRPJeqVsGQZAHujF9aVNGw4PYfEypkrTb1IsVG4IBf0sGi5rtt1elm1hJl90WfkQh7zjgAwwtxD08ilgDPYZAS6OY16cqzqHgZDZD"
 
 function myFunction(req, res) {
+  sendTextMessage(sender, "What do you want to be reminded about?");
   messaging_events = req.body.entry[0].messaging
   for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
