@@ -40,7 +40,8 @@ app.post('/webhook/', function (req, res) {
             text = event.message.text
 
             if (lastText == 'on') {
-              sendReminderMessage(function(sender, "When?") { 
+              someText = "When?";  
+              sendReminderMessage(function(sender, someText) { 
                 changeStatus(lastText);  
               });
               continue;
