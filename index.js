@@ -41,9 +41,8 @@ app.post('/webhook/', function (req, res) {
 
             if (lastText == 'on') {
               someText = "When?";  
-              sendReminderMessage(function(sender, someText) { 
-                changeStatus(lastText);  
-              });
+              sendReminderMessage(sender, someText, changeStatus);
+              changeStatus(lastText); 
               continue;
             }
 
@@ -102,11 +101,12 @@ function sendTextMessage(sender, text) {
     })
 }
 
-function sendReminderMessage(sendTextMessage) {
+function sendReminderMessage(sender, text) {
     sendTextMessage(sender, text);
+    changeStatus();
 }
 
-changeStatus(lastText) {
+function changeStatus() {
     lastText = 'off';
 }
 
