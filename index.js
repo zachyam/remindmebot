@@ -39,24 +39,19 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text) {
             text = event.message.text
 
-            if (text === 'generic') {
-              sendGenericMessage(sender)
-              continue;
-            }
-
-            if (text != 'troll' && lastText == 'on') {
+            if (lastText == 'on') {
               sendTextMessage(sender, "When do you want to be reminded?");
               lastText = 'off';
               continue;
             }
 
-            if (text === 'remindme') {
+            else if (text === 'remindme') {
               lastText = 'on';
               sendTextMessage(sender, "What do you want to be reminded about?");
               continue;
             } 
 
-            if (isNaN(text) && lastText === 'off') {
+            else if (isNaN(text) && lastText === 'off') {
                 sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
                 continue;
             } else {
