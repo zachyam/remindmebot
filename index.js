@@ -50,6 +50,13 @@ app.post('/webhook/', function (req, res) {
               continue;
             } 
 
+            if (remindActivated) {
+              sendTextMessage(sender, "In how many seconds do you want to be reminded about " +text+ " ?");
+              countdown = true;
+              remindActivated = false;
+              continue;
+            }
+            
             if (countdown) {
               sendTextMessage(sender, "Sure! We will remind you in " +text+ " seconds");
               startCountdown(sender, text);
@@ -57,11 +64,7 @@ app.post('/webhook/', function (req, res) {
               continue;
             }
 
-            if (remindActivated) {
-              sendTextMessage(sender, "In how many seconds do you want to be reminded about " +text+ " ?");
-              countdown = true;
-              continue;
-            }
+            
 
             //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
