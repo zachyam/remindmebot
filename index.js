@@ -56,10 +56,11 @@ app.post('/webhook/', function (req, res) {
               remindActivated = false;
               continue;
             }
-            
+
             if (countdown) {
+                startCountdown(sender, text);
               sendTextMessage(sender, "Sure! We will remind you in " +text+ " seconds");
-              startCountdown(sender, text);
+              
               countdown = false;
               continue;
             }
