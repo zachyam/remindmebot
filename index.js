@@ -40,24 +40,18 @@ app.post('/webhook/', function (req, res) {
             text = event.message.text
 
             if (lastText == 'on') {
-              sendReminderMessage(function(result) {
-                changeStatus(result);
-              });
-              sendTextMessage(sender, lastText);
+              sendReminderMessage(sender, "When?", changeStatus);
               continue;
             }
 
             if (text === 'remindme') {
-              sendReminderMessage1(function(result) {
-                changeStatus(result);
-              });
-              sendTextMessage(sender, lastText);
+              sendTextMessage(sender, "What?");
+              lastText = 'on';
               continue;
             } 
 
             else if (isNaN(text)) {
                 sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
-                sendTextMessage(sender, lastText);
                 continue;
             } else {
               sendTextMessage(sender, "Sure! We will remind you in " + text + " seconds");
@@ -84,8 +78,8 @@ function startCountdown(sender, time) {
 
 }
 
-function changeStatus(result) {
-    lastText = result;
+function changeStatus() {
+    lastText = 'off';
 }
 
 function sendTextMessage(sender, text) {
@@ -109,10 +103,28 @@ function sendTextMessage(sender, text) {
     })
 }
 
-function sendReminderMessage(callback) {
-    sendTextMessage(sender, "When?");
-    callback('off');
+function sendReminderMessage(sender, text, callback) {
+    messageData = {
+        text: text
+    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+    callback();
 }
+
 
 function sendReminderMessage1(callback) {
     sendTextMessage(sender, "What?");
