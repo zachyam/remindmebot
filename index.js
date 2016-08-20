@@ -40,9 +40,8 @@ app.post('/webhook/', function (req, res) {
             text = event.message.text
 
             if (lastText == 'on') {
-              lastText = 'off';
-              sendReminderMessage(function(lastText) { 
-                sendTextMessage(sender, "When?");  
+              sendReminderMessage(function(sender, "When?") { 
+                changeStatus(lastText);  
               });
               continue;
             }
@@ -103,11 +102,31 @@ function sendTextMessage(sender, text) {
 }
 
 function sendReminderMessage(callback) {
-    callback(lastText) {
-        lastText = 'off';
+    callback(sender, text) {
+        messageData = {
+        text:text
+    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+        })
     }
 }
 
+changeStatus(lastText) {
+    lastText = 'off';
+}
 
 function sendGenericMessage(sender) {
     messageData = {
