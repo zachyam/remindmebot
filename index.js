@@ -54,6 +54,7 @@ app.post('/webhook/', function (req, res) {
               sendTextMessage(sender, "In how many seconds do you want to be reminded about " +text+ " ?");
               countdown = 'on';
               remindActivated = 'off';
+              sendTextMessage(sender, countdown);
               continue;
             }
 
