@@ -99,16 +99,11 @@ app.post('/webhook/', function (req, res) {
               continue;
             } 
 
-            if (text != 'remindme') {
-              --i;
-              if(req.body.entry[0].messaging[i] == 'remindme') {
-                sendTextMessage(sender, "When?");
-              } else {
-                ++i;
-              }
+            if (lastText === 'on') {
+              sendTextMessage(sender, "When?");
               continue;
             }
-
+            
             if (isNaN(text)) {
                 sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
                 continue;
