@@ -84,6 +84,7 @@ function sendReminderMessage(sender, text, callback) {
     callback('off');
 }
 
+var j = 0;
 
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
@@ -100,9 +101,13 @@ app.post('/webhook/', function (req, res) {
             } 
 
             if (lastText === "on") {
-              sendTextMessage(sender, "When?");
-              lastText = 'not';
-              continue;
+              if (j == 0) {
+                sendTextMessage(sender, "When?");
+                ++j;
+                continue;
+              } else { 
+                j = 0;
+              }
             }
 
             if (isNaN(text)) {
