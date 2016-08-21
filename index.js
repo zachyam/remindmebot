@@ -29,16 +29,11 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 
-var lastText;
 
 function startCountdown(sender, time) {
   setTimeout(function() 
     {sendTextMessage(sender, "Time's up!")}, time * 1000);
 
-}
-
-function changeStatus(myVar) {
-    lastText = myVar;
 }
 
 function sendTextMessage(sender, text) {
@@ -62,29 +57,9 @@ function sendTextMessage(sender, text) {
     })
 }
 
-function sendReminderMessage(sender, text, callback) {
-    messageData = {
-        text: text
-    }
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token:token},
-        method: 'POST',
-        json: {
-            recipient: {id:sender},
-            message: messageData,
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
-    callback('off');
-}
 
 app.post('/webhook/', function (req, res) {
+    var lastText;
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
@@ -98,10 +73,9 @@ app.post('/webhook/', function (req, res) {
               continue;
             } 
 
-            if (lastText === 1) {
-              sendTextMessage(sender, lastText);
+            if (lastText === 'on') {
               sendTextMessage(sender, "When?");
-              lastText--;
+              lastText = 'off';
               continue;
             }
 
