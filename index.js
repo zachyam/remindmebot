@@ -66,7 +66,6 @@ app.post('/webhook/', function (req, res) {
         sender = event.sender.id
         if (event.message && event.message.text) {
             text = event.message.text
-            sendTextMessage(sender, text);
 
             if (text === "remindme") {
               sendTextMessage(sender, "What do you want to be reminded about?");
