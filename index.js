@@ -57,9 +57,9 @@ function sendTextMessage(sender, text) {
     })
 }
 
+var lastText;
 
 app.post('/webhook/', function (req, res) {
-    var lastText;
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
@@ -69,13 +69,13 @@ app.post('/webhook/', function (req, res) {
             sendTextMessage(sender, text);
 
             if (text === "remindme") {
-              sendTextMessage(sender, "What?");
+              sendTextMessage(sender, "What do you want to be reminded about?");
               lastText = 'on';
               continue;
             } 
 
             if (text === 'on') {
-              sendTextMessage(sender, "When?");
+              sendTextMessage(sender, "When do you want to be reminded?");
               lastText = 'off';
               continue;
             }
