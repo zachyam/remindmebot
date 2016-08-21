@@ -60,6 +60,7 @@ function sendTextMessage(sender, text) {
 
 app.post('/webhook/', function (req, res) {
     var lastText;
+    var tasks = [];
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
@@ -74,7 +75,8 @@ app.post('/webhook/', function (req, res) {
               continue;
             } 
 
-            if (text != "wr" && lastText === 'on') {
+            if (lastText === 'on') {
+              tasks[i] = text;  
               sendTextMessage(sender, "When?");
               lastText = 'off';
               continue;
@@ -84,7 +86,7 @@ app.post('/webhook/', function (req, res) {
                 sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
                 continue;
             } else {
-              sendTextMessage(sender, "Sure! We will remind you in " + text + " seconds");
+              sendTextMessage(sender, "Sure! We will remind you about " + tasks[i] + " in " + text + " seconds");
               startCountdown(sender, text);
               continue;
             }
