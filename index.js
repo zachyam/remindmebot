@@ -57,46 +57,27 @@ function sendTextMessage(sender, text) {
     })
 }
 
-
+//responding to received messages
 app.post('/webhook/', function (req, res) {
-    var lastText;
-    var tasks = [];
-    messaging_events = req.body.entry[0].messaging
-    for (i = 0; i < messaging_events.length; i++) {
-        event = req.body.entry[0].messaging[i]
-        sender = event.sender.id
+  //req.body.entry has only 0 as key if events are not batched
+    console.log("***************************** WEB HOOK PoST*****************")
+
+    //handling messaging events
+    let messaging_events = req.body.entry[0].messaging
+    //messaging events has attributes id,time,messaging
+
+    for (let i = 0; i < messaging_events.length; i++) {
+        let event = req.body.entry[0].messaging[i]
+        console.log("event")
+        console.log(event.message.text)
+        console.log(event.message.seq)
+        console.log(event.message.mid)
+        //comment
+        let sender = event.sender.id
         if (event.message && event.message.text) {
-            text = event.message.text
-            sendTextMessage(sender, text);
-
-            if (text === "remindme") {
-              sendTextMessage(sender, "What?");
-              lastText = 'on';
-              continue;
-            } 
-
-            if (lastText === 'on') {
-              tasks[i] = text;  
-              sendTextMessage(sender, "When?");
-              lastText = 'off';
-              continue;
-            }
-
-            if (isNaN(text)) {
-                sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
-                continue;
-            } else {
-              sendTextMessage(sender, "Sure! We will remind you about " + tasks[0] + " in " + text + " seconds");
-              startCountdown(sender, text);
-              continue;
-            }
-
-            //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
-        }
-        if (event.postback) {
-            text = JSON.stringify(event.postback)
-            sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
-            continue
+            console.log("here")
+            let text = event.message.text
+            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
     }
     res.sendStatus(200)
