@@ -99,7 +99,7 @@ app.post('/webhook/', function (req, res) {
               continue;
             } 
 
-            if (req.body.entry[0].messaging[i] == 'remindme') {
+            if (req.body.entry[0].messaging[--i] == 'remindme') {
               sendTextMessage(sender, "When?");
               continue;
             }
