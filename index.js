@@ -94,13 +94,13 @@ app.post('/webhook/', function (req, res) {
 
             if (text === "remindme") {
               sendTextMessage(sender, "What?");
-              lastText = "on";
+              lastText = 1;
               continue;
             } 
 
-            if (lastText === "on") {
+            if (lastText === 1) {
               sendTextMessage(sender, "When?");
-              lastText;
+              lastText--;
               continue;
             }
 
