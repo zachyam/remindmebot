@@ -105,7 +105,7 @@ app.post('/webhook/', function (req, res) {
               continue;
             }
 
-            if (isNaN(text)) {
+            if (text > '0' && text < '99') {
                 sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
                 continue;
             } else {
