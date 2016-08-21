@@ -86,7 +86,7 @@ app.post('/webhook/', function (req, res) {
                 sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
                 continue;
             } else {
-              sendTextMessage(sender, "Sure! We will remind you about " + tasks[i] + " in " + text + " seconds");
+              sendTextMessage(sender, "Sure! We will remind you about " + tasks[0] + " in " + text + " seconds");
               startCountdown(sender, text);
               continue;
             }
