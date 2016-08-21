@@ -74,7 +74,7 @@ app.post('/webhook/', function (req, res) {
               continue;
             } 
 
-            if (text != "wr" && !isNaN(text)) {
+            if (text != "wr" && lastText === 'on') {
               sendTextMessage(sender, "When?");
               lastText = 'off';
               continue;
