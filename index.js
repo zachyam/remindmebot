@@ -99,6 +99,7 @@ app.post('/webhook/', function (req, res) {
             } 
 
             if (lastText === 1) {
+              sendTextMessage(sender, lastText);
               sendTextMessage(sender, "When?");
               lastText--;
               continue;
