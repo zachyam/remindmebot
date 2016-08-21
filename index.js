@@ -57,23 +57,28 @@ function sendTextMessage(sender, text) {
     })
 }
 
+
 app.post('/webhook/', function (req, res) {
+    var lastText;
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
         if (event.message && event.message.text) {
             text = event.message.text
+            sendTextMessage(sender, text);
 
-            if (text === 'generic') {
-              sendGenericMessage(sender)
-              continue;
-            }
-
-            if (text === 'remindme') {
-              sendTextMessage(sender, "In how many seconds do you want to be reminded?");
+            if (text === "remindme") {
+              sendTextMessage(sender, "What?");
+              lastText = 'on';
               continue;
             } 
+
+            if (text === 'on') {
+              sendTextMessage(sender, "When?");
+              lastText = 'off';
+              continue;
+            }
 
             if (isNaN(text)) {
                 sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
