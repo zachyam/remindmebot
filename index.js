@@ -99,11 +99,8 @@ app.post('/webhook/', function (req, res) {
               continue;
             } 
 
-            if (text != 'remindme' && lastText === 'on') {
+            if (req.body.entry[0].messaging[i] == 'remindme') {
               sendTextMessage(sender, "When?");
-              sendReminderMessage(sender, "When?", function(myVar) {
-                changeStatus(myVar);
-              });
               continue;
             }
 
