@@ -75,7 +75,7 @@ app.post('/webhook/', function (req, res) {
 
             if (text === 'on') {
               sendTextMessage(sender, "When do you want to be reminded?");
-              let lastText = 'off';
+              lastText = 'off';
               continue;
             }
 
