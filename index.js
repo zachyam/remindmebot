@@ -60,6 +60,7 @@ function sendTextMessage(sender, text) {
 var subject = null;
 
 app.post('/webhook/', function (req, res) {
+    var i = 0;
     messaging_events = req.body.entry[0].messaging
     while (i < 10) {
         event = req.body.entry[0].messaging[i]
