@@ -71,8 +71,6 @@ app.post('/webhook/', function (req, res) {
             sendTextMessage(sender, i);
 
             continue;
-            /*sendTextMessage(sender, subject);
-
 
             if (text === 'remindme') {
               sendTextMessage(sender, "What do you want to be reminded about?");
@@ -83,7 +81,7 @@ app.post('/webhook/', function (req, res) {
                 if(subject === null) {
                     subject = text;
                     sendTextMessage(sender, "When do you want to be reminded?");
-                    //continue;
+                    continue;
                     
                 } else {
                     sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
@@ -97,7 +95,7 @@ app.post('/webhook/', function (req, res) {
                   
 
             sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
-            */
+            
         }
         if (event.postback) {
             text = JSON.stringify(event.postback)
