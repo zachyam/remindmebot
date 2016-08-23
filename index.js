@@ -61,7 +61,7 @@ var subject = null;
 
 app.post('/webhook/', function (req, res) {
     
-    for (i = 0; i < messaging_events.length; i++) {
+    for (i = 0; i < 20; i++) {
         var messaging_events = req.body.entry[i].messaging
         var event = req.body.entry[i].messaging[i];
         var sender = event.sender.id;
