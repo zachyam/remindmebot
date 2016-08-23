@@ -60,12 +60,12 @@ function sendTextMessage(sender, text) {
 var subject = null;
 
 app.post('/webhook/', function (req, res) {
-    messaging_events = req.body.entry[0].messaging
-    for (i = 0; i < messaging_events.length; i++) {
-        event = req.body.entry[0].messaging[i];
-        var sender = event.sender.id;
+    let messaging_events = req.body.entry[0].messaging
+    for (let i = 0; i < messaging_events.length; i++) {
+        let event = req.body.entry[0].messaging[i];
+        let sender = event.sender.id;
         if (event.message && event.message.text) {
-            var text = event.message.text;
+            let text = event.message.text;
 
             sendTextMessage(sender, text);
             sendTextMessage(sender, i);
@@ -90,17 +90,17 @@ app.post('/webhook/', function (req, res) {
             } else {
                 sendTextMessage(sender, "Sure! We will remind you in " + text + " seconds");
                 startCountdown(sender, text);
-            }*/
+            }
 
                   
 
-            //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
         if (event.postback) {
             text = JSON.stringify(event.postback)
             sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
             continue;
-        }
+        } */
     }
     res.sendStatus(200)
 })
