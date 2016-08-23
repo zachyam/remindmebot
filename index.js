@@ -69,10 +69,10 @@ app.post('/webhook/', function (req, res) {
 
             sendTextMessage(sender, text);
             sendTextMessage(sender, i);
-            sendTextMessage(sender, subject);
+            /*sendTextMessage(sender, subject);
 
 
-            if (text === "remindme") {
+            if (text === 'remindme') {
               sendTextMessage(sender, "What do you want to be reminded about?");
               continue;
                 
@@ -90,7 +90,7 @@ app.post('/webhook/', function (req, res) {
             } else {
                 sendTextMessage(sender, "Sure! We will remind you in " + text + " seconds");
                 startCountdown(sender, text);
-            }
+            }*/
 
                   
 
