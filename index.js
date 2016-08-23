@@ -75,13 +75,13 @@ app.post('/webhook/', function (req, res) {
 
             if (text === "remindme") {
               sendTextMessage(sender, "What do you want to be reminded about?");
-                continue;
+                
             } 
             if (isNaN(text)) {
                 if(subject === null) {
                     subject = text;
                     sendTextMessage(sender, "When do you want to be reminded?");
-                    continue;
+                    
                 } else {
                     sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
                 }
@@ -98,7 +98,7 @@ app.post('/webhook/', function (req, res) {
         if (event.postback) {
             text = JSON.stringify(event.postback)
             sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
-            continue
+            continue;
         }
     }
     res.sendStatus(200)
