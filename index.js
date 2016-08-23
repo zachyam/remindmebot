@@ -58,7 +58,6 @@ function sendTextMessage(sender, text) {
 }
 
 var subject = null;
-var timer = null;
 
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
@@ -70,6 +69,7 @@ app.post('/webhook/', function (req, res) {
 
             sendTextMessage(sender, text);
             sendTextMessage(sender, i);
+            sendTextMessage(sender, subject);
 
 
             if (text === "remindme") {
