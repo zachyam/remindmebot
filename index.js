@@ -73,13 +73,14 @@ app.post('/webhook/', function (req, res) {
 
             if (text === "remindme") {
               sendTextMessage(sender, "What do you want to be reminded about?");
-            
-            } else if (lastText === 'on') {
-                try {
+                continue;
+            } 
+            if (lastText === 'on') {
+                do {
                     sendTextMessage(sender, "When do you want to be reminded?");
-                } finally {
-                    lastText = 'off';
-                }
+                    lastText='off';
+                    }
+                while (lastText === 'on');
 
           
             } else if (lastText === 'off' && isNaN(text)) {
