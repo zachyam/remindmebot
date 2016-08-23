@@ -66,10 +66,9 @@ app.post('/webhook/', function (req, res) {
         var sender = event.sender.id;
         if (event.message && event.message.text) {
             var text = event.message.text;
-            sendTextMessage(sender, messaging_events.length);
             sendTextMessage(sender, text);
             sendTextMessage(sender, i);
-            continue;
+            //continue;
             /*sendTextMessage(sender, subject);
 
 
