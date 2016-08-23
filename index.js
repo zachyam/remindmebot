@@ -69,6 +69,7 @@ app.post('/webhook/', function (req, res) {
 
             sendTextMessage(sender, text);
             sendTextMessage(sender, i);
+            continue;
             /*sendTextMessage(sender, subject);
 
 
