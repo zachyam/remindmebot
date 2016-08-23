@@ -1,9 +1,7 @@
-'use strict'
-
-const express = require('express')
-const bodyParser = require('body-parser')
-const request = require('request')
-const app = express()
+var express = require('express')
+var bodyParser = require('body-parser')
+var request = require('request')
+var app = express()
 
 app.set('port', (process.env.PORT || 5000))
 
@@ -62,12 +60,12 @@ function sendTextMessage(sender, text) {
 var subject = null;
 
 app.post('/webhook/', function (req, res) {
-    let messaging_events = req.body.entry[0].messaging
-    for (let i = 0; i < messaging_events.length; i++) {
-        let event = req.body.entry[0].messaging[i];
-        let sender = event.sender.id;
+    var messaging_events = req.body.entry[0].messaging
+    for (i = 0; i < messaging_events.length; i++) {
+        var event = req.body.entry[0].messaging[i];
+        var sender = event.sender.id;
         if (event.message && event.message.text) {
-            let text = event.message.text;
+            var text = event.message.text;
 
             sendTextMessage(sender, text);
             sendTextMessage(sender, i);
