@@ -61,7 +61,7 @@ var subject = null;
 
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
-    for (i = 0; i < messaging_events.length; i++) {
+    while (i < 10) {
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
         if (event.message && event.message.text) {
@@ -69,6 +69,7 @@ app.post('/webhook/', function (req, res) {
 
             sendTextMessage(sender, text);
             sendTextMessage(sender, i);
+            i++;
             /*sendTextMessage(sender, subject);
 
 
