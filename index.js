@@ -57,7 +57,8 @@ function sendTextMessage(sender, text) {
     })
 }
 
-var lastText = 'on';
+var subject = null;
+var timer = null;
 
 app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
@@ -76,19 +77,24 @@ app.post('/webhook/', function (req, res) {
               sendTextMessage(sender, "What do you want to be reminded about?");
                 continue;
             } 
-            if (isNaN(text) && text != "remindme") {
+            if (isNaN(text)) {
+                if(subject === null) {
+                    subject = text;
                     sendTextMessage(sender, "When do you want to be reminded?");
                     continue;
-                  
-            } if (isNaN(text)) {
-                sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
+                } else {
+                    sendTextMessage(sender, "Sorry! Invalid input. Please type in remindme to start.");
+                }
             } else {
-              sendTextMessage(sender, "Sure! We will remind you in " + text + " seconds");
-              startCountdown(sender, text);
+                sendTextMessage(sender, "Sure! We will remind you in " + text + " seconds");
+                startCountdown(sender, text);
             }
+
+                  
 
             //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
+    }
         if (event.postback) {
             text = JSON.stringify(event.postback)
             sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
