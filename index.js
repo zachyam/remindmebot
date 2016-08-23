@@ -57,7 +57,7 @@ function sendTextMessage(sender, text) {
     })
 }
 
-var subject = null;
+var lastText = null;
 
 app.post('/webhook/', function (req, res) {
     
