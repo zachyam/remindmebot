@@ -59,8 +59,8 @@ function sendTextMessage(sender, text) {
 
 app.post('/webhook/', function (req, res) {
     var lastText;
+    messaging_events = req.body.entry[0].messaging
     for (i = 0; i < 3; i++) {
-        var messaging_events = req.body.entry[i].messaging
         var event = req.body.entry[i].messaging[i];
         var sender = event.sender.id;
         if (event.message && event.message.text) {
